@@ -1,0 +1,15 @@
+stages:
+  - deploy
+
+deploy_to_jira:
+  stage: deploy
+  image: curlimages/curl:latest  # Lightweight container with cURL
+  script:
+    - echo "Testing Jira ScriptRunner Integration..."
+    - |
+      curl -X POST "https://cod-edmtest.dell.com/rest/scriptrunner/latest/user/exec" \
+        -H "Authorization: Bearer NzY0ODc0NjM1Mjg1Ogz96R5IpZojZVipXUCUDzyQvG9q" \
+        -H "Content-Type: application/json" \
+        --data '{"script": "log.warn(\"Hello!! Integration successful\");"}'
+  only:
+    - sharad  # Runs only on this branch
