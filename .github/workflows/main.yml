@@ -1,0 +1,21 @@
+name: Deploy Groovy Script to Jira
+
+on:
+  push:
+    branches:
+      - main  # Runs only on the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Deploy Groovy Script to Jira
+        run: |
+          curl -X POST "https://cod-edmtest.dell.com/rest/scriptrunner/latest/user/exec" \
+            -H "Authorization: Bearer ${{ secrets.JIRA_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data '{"script": "log.warn(\"Hello!! Integration successful\");"}'
